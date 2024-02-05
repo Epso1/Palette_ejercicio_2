@@ -37,6 +37,5 @@ public class MainActivity extends AppCompatActivity {
         recView.setAdapter(adaptador);
         recView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-
     }
 }

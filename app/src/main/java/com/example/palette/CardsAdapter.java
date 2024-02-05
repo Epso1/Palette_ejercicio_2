@@ -47,6 +47,8 @@
             Context context = viewHolder.itemView.getContext();
 
             viewHolder.imagen.setImageResource(item.getImagen());
+
+
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
