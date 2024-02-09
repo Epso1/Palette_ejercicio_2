@@ -1,6 +1,8 @@
 package com.example.palette;
 
 import android.os.Bundle;
+import android.transition.Slide;
+import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,7 +16,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
         setContentView(R.layout.activity_main);
+
+        // Indica la animación de reentrada en este caso Slide
+        Slide in = new Slide();
+        in.setDuration(1000);
+        getWindow().setReenterTransition(in);
 
         Toolbar toolbar = findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
