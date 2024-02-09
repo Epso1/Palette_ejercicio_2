@@ -3,6 +3,9 @@ package com.example.palette;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +19,20 @@ public class ImagePalette extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
         setContentView(R.layout.activity_image_palette);
+
+        // Indica la animación de entrada en este caso Fade
+        Fade inAnim = new Fade();
+        inAnim.setDuration(1000);
+        getWindow().setEnterTransition(inAnim);
+
+        // Indica la animación de salida en este caso Slide
+        Slide outAnim = new Slide();
+        outAnim.setDuration(1000);
+        getWindow().setExitTransition(outAnim);
 
         // Configura la Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -25,8 +41,14 @@ public class ImagePalette extends AppCompatActivity {
         // Obtén la imagen seleccionada del Intent
         int selectedImage = getIntent().getIntExtra("image_resource", 0);
 
+        // Configura la imagen en el ImageView
+        ImageView imageView = findViewById(R.id.imageView);
+        imageView.setImageResource(selectedImage);
+
+        // Crea un Bitmap a partir de la imagen seleccionada
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), selectedImage);
 
+        // Genera la paleta de colores de la imagen
         Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
             @Override
             public void onGenerated(@Nullable Palette palette) {
@@ -38,6 +60,7 @@ public class ImagePalette extends AppCompatActivity {
                 int darkMutedColor = palette.getDarkMutedColor(0);
                 int lightMutedColor = palette.getLightMutedColor(0);
 
+                // Configura los colores en la interfaz
                 toolbar.setBackgroundColor(vibrantColor);
                 toolbar.setTitleTextColor(lightVibrantColor);
 
@@ -59,11 +82,7 @@ public class ImagePalette extends AppCompatActivity {
                 lightMutedTv.setBackgroundColor(lightMutedColor);
                 lightMutedTv.setTextColor(darkMutedColor);
 
-
             }
         });
-        // Configura la imagen en el ImageView
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageResource(selectedImage);
     }
 }

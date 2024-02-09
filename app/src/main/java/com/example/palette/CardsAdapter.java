@@ -1,5 +1,7 @@
     package com.example.palette;
 
+    import android.app.Activity;
+    import android.app.ActivityOptions;
     import android.content.Context;
     import android.content.Intent;
     import android.view.LayoutInflater;
@@ -54,8 +56,14 @@
                 public void onClick(View view) {
                     // Iniciar la actividad ImagePalette con la información necesaria
                     Intent intent = new Intent(context, ImagePalette.class);
+                    // Agregar la transición compartida
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context,
+                            viewHolder.imagen, // ImageView de origen
+                            "tranphoto" // Nombre de la transición compartida
+                    );
+
                     intent.putExtra("image_resource", item.getImagen());  // Pasa la información necesaria a ImagePalette
-                    context.startActivity(intent);
+                    context.startActivity(intent, options.toBundle()); // Añadimos el objeto opciones
                 }
             });
 

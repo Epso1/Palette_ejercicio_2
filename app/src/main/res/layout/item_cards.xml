@@ -11,9 +11,9 @@
 
         <ImageView
             android:id="@+id/image1"
+            android:transitionName="tranphoto"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:transitionName="tranphoto"
             android:scaleType="centerCrop"/>
 
 </androidx.cardview.widget.CardView>
